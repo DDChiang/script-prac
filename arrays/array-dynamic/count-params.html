@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <div class="1"></div>
+    <div class="2" style="background: #ff9900;"></div>
+    <div class="3"></div>
+    <div class="4"></div>
+    <div class="5"></div>
+    <div class="6"></div>
+    <script>
+        $(function () {
+
+            $("div.1").html(countParams("he", "check", "ho"));
+
+            //basic check # parameters passed in
+            function countParams() {
+                argText = "";
+
+                //do something for each of the params
+                for (var i =0; i<arguments.length; i++)
+                {
+                   argText = argText + arguments[i] + " ";
+                }
+                return arguments.length + ": " + argText;
+            }
+
+            //dynamically create var and extend each partner array
+            //test arrays
+            var bobs = [{ name: "11Johnny", val: 1 }, { name: "21Bass", val: 2 }, { name: "31doc", val: 3 }, { name: "11Kevin", val: 1 }, { name: "11DD", val: 1 }, { name: "31John", val: 3 }];
+            var kits = [{ name: "12CanCan", val: 1 }, { name: "22Charles", val: 2 }, { name: "32doc", val: 3 }, { name: "12Kevin", val: 1 }, { name: "12DD", val: 1 }];
+            var coms = [{ name: "13Ajax", val: 1 }, { name: "23Choco", val: 2 }, { name: "33Loc", val: 3 }, { name: "13PP", val: 1 }, { name: "13OO", val: 1 }, { name: "33lokok", val: 3 }];
+
+            //go
+            function addVal() {
+                console.log(arguments.length);
+                var aVal = [];
+                var w = window;
+
+                for (var i=0;i<arguments.length;i++)
+                {
+                    //create values for "array Value" prop
+                    aVal.push({ aVal: i });         //works
+                    //assign "array val" to each elem inside each array
+                    for (var c = 0; c < arguments[i].length; c++) {
+                        $.extend(true, (arguments[i])[c], aVal[i]);     //works
+                    }
+                }
+                
+                //time to sort
+
+                //join them
+                var arrayGroup = bobs.concat(kits, coms);
+                var valSortGroup = arrayGroup.sort(function (a, b) { return parseInt(a.val) - parseInt(b.val) });
+                var aGL = arrayGroup.length;
+                            //console.log("length " + aGL);
+                            //console.log(JSON.stringify(valSortGroup));
+                            //console.log(valSortGroup[valSortGroup-1].name);
+                            //console.log(valSortedGroup[valSortedGroup.length].val); //someting wrong in here
+                var hVal = valSortGroup[valSortGroup.length-1].val; //how do we get the val?
+                //create val filter array for later 
+                for (var vc = 1; vc < (hVal + 1) ; vc++) {
+                    w["vArr" + vc] = [];
+                }
+
+                //separate them out and filter by reg val (prep for aVal sort)
+                for (ac = 0; ac < arrayGroup.length; ac++) {
+                    //sense which val the item has
+                    vVal = arrayGroup[ac].val;
+                    //push each elem into whichever correct vVal array
+                    //console.log(vVal);
+                    w["vArr" + 1].push(arrayGroup[ac]);
+                }
+                //and in each val filter, sort by array val
+                for (aac = 0; aac < aVal[aVal.length-1].aVal; aac++)
+                {
+                    w["vArr" + (0 + 1)].sort(function (a, b) { return parseInt(a.aVal)- parseInt(b.aVal)});
+                }
+                //join them all back together
+
+                //return
+
+                // return JSON.stringify(aVal) + JSON.stringify(bobs);
+
+                return JSON.stringify(aVal) + "<br>" + JSON.stringify(vArr1);
+                
+            }
+
+            $("div.2").html(addVal(bobs, kits, coms));
+
+            //$("div.3").html();
+
+            //function checkParameters()
+            //{
+            //    var parameterArray = [];
+            //    for (var i = 0; i < arguments.length; i++) {
+            //        parameterArray.push({
+            //            val:arguments[i]
+            //        });
+            //    }
+            //}
+
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+﻿
+//mixin 
+
+.box-sizing() {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
+body {
+	width: 100%;
+	
+}
+
+div
+{
+	display: block;
+    margin: 10px;
+    background: #ddd;
+	width: 200px;
+	min-height: 200px;
+	font-size: 15px;
+	font-family: 'arial', sans-serif;
+	.box-sizing();
+	padding: 10px;
+	float: left;
+
+	span
+	{
+		background: #ff3300;
+	}	
+
+	&.momma
+	{
+		  width: 100%;
+		  background: white;
+		  border: 1px solid black;
+		  height: 250px;
+	}
+
+	&.third
+	{
+		background: orange;
+
+		span
+		{
+			background: #ddd;
+		}
+	}
+
+	&.float_left
+	{
+		float: left;
+	}
+		
+}
+
+hr
+{
+	width: 100% !important;
+}

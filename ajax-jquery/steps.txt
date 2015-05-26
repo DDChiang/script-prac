@@ -1,0 +1,9 @@
+create"array prior"  prop val for each array list
+separate out items with certain priority val into arrays
+  	>> then sort those based on "array prior" val
+join the arrays
+	>> yay!
+	
+
+
+(but at which step do you assign "array prior vals"?)

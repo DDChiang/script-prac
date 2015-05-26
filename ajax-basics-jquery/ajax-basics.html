@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <style>
+        div.momma
+        {
+            border: 1px solid grey;
+            background: #fff;
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 10px 0;
+
+        }
+       
+        div
+        {
+            background: #ddd;
+            width: 200px;
+            min-height: 200px;
+            margin: 10px;
+            box-sizing: border-box;
+            padding: 10px;            
+            float: left;    
+        }
+
+        div span
+        {
+            background: #ff3300;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="momma">
+       
+        <div class="1">
+            <button id="1">Pre-base call</button><br />
+            <span class="1"></span><br />
+            <button id="2">Basic call</button><br />
+            <span class="2"></span><br />
+        </div>
+        <div class="2">
+            Check state of this call<br />
+            <button class="1">Basic call</button><br />
+            <span class="1"></span><br />
+            <span class="2"></span><br />
+        </div>
+        <div class="3">
+            <button class="1">Get Request</button><br />
+            <span class="1"></span><br />
+            <span class="2"></span><br />
+        </div>
+        <div class="4">
+            <button class="1">Post</button><br />
+            <span class="1"></span><br />
+            <span class="2"></span><br />
+        </div>
+
+        <div class="5">
+            <button class="1">Post - repeat</button><br />
+            <span class="1"></span><br />
+            <span class="2"></span><br />
+        </div>
+
+    </div>
+
+    <script src="data-json.txt"></script>
+
+    <!--
+        <div class="momma">
+            <div class="1">
+                <span class="1"></span><br />
+                <span class="2"></span><br />
+                <span class="3"></span><br />
+                <span class="4"></span><br />
+            </div>
+        </div>
+    -->
+
+
+</body>
+</html>

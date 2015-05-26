@@ -1,0 +1,32 @@
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<title>Practice</title>
+</head>
+<body>
+
+
+
+<div><button>go</button></div>
+go
+<script>
+$(function() {
+	$("div").load("data.txt p");
+	
+	$("div button").click(function() {
+		$.ajax({
+            type: "GET",
+            url: "http://api.flickr.com/services/rest/?&method=flickr.people.getPublicPhotos&api_key=71989a3c631cbbafa0526232a612dda1&user_id=[ddchiang]&format=json",
+            dataType: "json"
+        }).done(function (data) {
+            $("div").html(JSON.stringify(data));
+            console.log("it worked!");
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert("AJAX failed: " + textStatus + ", " + errorThrown);
+        });
+	});
+	
+});
+</script>
+</body>
+</html>

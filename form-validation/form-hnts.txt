@@ -1,0 +1,34 @@
+extras:
+
+
+
+---
+input types: text, password, submit, radio(only allows select 1), 
+	checkbox (like radio, but allows you to select x>=0), 
+	button(can specify onclick="")
+	file
+	
+html5 input types: 
+		color, date, datetime, datetime-local, 
+		email, month, 
+		number, range, 
+		search, tel, time, url, week
+
+autofocus : input on page losd
+
+input booleans:
+	-disabled
+	-multiple
+	-required
+	
+autocomplete="on" or "off": form as a whole or indiv inputs to override 
+
+---
+
+pattern: regexp input is checked against
+	ex) Country code: <input type="text" name="country_code" pattern="[A-Za-z]{3}" title="Three letter country code">
+	
+submit overrides
+	- formaction: what php or script page to activate 
+	- formmethod: get or post
+	- formtarget: whether to open new window, tab, o r stay : "_blank"

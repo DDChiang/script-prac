@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style-template.css" />
+        <title>form valid basics</title>
+	</head>
+	<body>
+
+        <div class="momma">
+            <p>New HTML form stuff</p>
+            <div class="1">     
+                 image upload
+                <form action="" method="post">
+                    Images: <input type="file" value="" multiple />
+                    <input type="submit" value="upload " />
+                </form>
+            </div>
+            <div class="2">
+                 HTML5 form elems<br /><br />
+                <form action="" method="post">
+                    <input type="color" value="#ff3300"/>
+                    <input type="email" placeholder="email"/>
+                    <input type="datetime"/>
+                    <input type="range" min="1" max="50"/> pick rng<br /><br />
+                    
+                    <input type="checkbox" value="blue"/>blue
+                    <input type="checkbox" value="green" />gre
+                    <input type="checkbox" value="red" disabled/>(disabled) red <br />
+
+                    <input type="submit" value="submit " /><br /><br />
+                </form>
+            </div>
+            <div class="3">
+                 HTML5 form elems<br /><br />
+                <form action="" method="post" autocomplete="on">
+                    Email: <input type="email" placeholder="email" autofocus autocomplete="on"/><br />    <!---auto focus on page load effect-->
+                    Password: <input type="password" placeholder="password" required autocomplete="off"/><br />    
+                    Disabled field: <input type="password" placeholder="uneditable" disabled/><br />
+                    Patterned field(Country Code): <input type="text" name="Country Code" placeholder="ABC" pattern="[A-Za-z]{3}" /><br />
+                     <input type="submit" value="submit!"/>
+                </form>
+            </div>
+            <div class="4">
+                Check validity
+                <form>
+                    HTML first:<br /><br />
+                    Number: <input type="number" />
+                    <input type="submit" value="submit" /> <br /><br />
+
+                    JS: <br /><br />
+                    <!--# btw 4 and 10: <input id="checkMe" type="number" min="4" max="10"/>-->
+                    
+                    <input id="id1" type="number" min="100" max="300">
+                    
+                    
+                </form>
+
+                <button onclick="validChecker()">OK</button>  
+               
+                <span id="demo1"></span>
+                <span id="demo2"></span>
+                <script>
+
+                    //script must be inserted afterwards to be able to check input value (user enters input value after page is ready. )
+                    function validChecker() {
+
+                        var inpObj = document.getElementById("id1");
+
+                        //var inpObj = $("span#id1");  //<-- checkValidity seems to work wiht only javascript id selector object. not with jquery's
+                        if (inpObj.checkValidity() == false) {
+                            $("#demo1").html(inpObj.validationMessage);
+                        }
+                        else {
+                            $("#demo1").html("Input OK");
+                        }
+
+                        if (inpObj.validity.rangeOverflow)
+                        {
+                            $("#demo2").html("x is too large");
+                        }
+
+                        else if (inpObj.validity.rangeUnderflow)
+                        {
+                            $("#demo2").html("too small");
+                        }
+
+                    }
+                </script>
+            </div>
+
+            <div class="5">
+                Check Range
+                <form autocomplete="on">
+                    # btw 0 and 10: 
+                    <input id="rangeObj" type="number" value="" min= "9" max="10"/>
+                </form>
+                <button onclick="rangeChecker()">Check #</button> <!---remember to stick buttons outisde of forms-->
+                <span id="gren1" style="display: block; background: #4cff00; width: 100%; height: 20px;"></span>
+                <span id="gren2"></span>
+            <script>
+                function rangeChecker() {
+                    
+                   
+
+                    //rangeObj = $("#rangeObj");
+                    var rangeObj = document.getElementById("rangeObj");
+
+                   var numberCheck = isNaN(rangeObj.value);
+                   if (numberCheck) {
+                       console.log("boop");
+                   }
+                   
+                    if (rangeObj.checkValidity() == false) {
+                        $("#gren1").html(rangeObj.validationMessage);
+                        console.log(rangeObj.validationMessage);
+                    }
+                    else {
+                        $("#gren1").html("Input OK");
+                    }
+
+                    //check if input is number
+                    if (isNaN(rangeObj.value)) {
+                        $("#gren2").html("need your number");
+                        console.log("ninput ok");
+                    }
+                    else {
+                        $("#gren2").html("need your number");
+                    }
+
+                    //if (rangeObj.checkValidity() == false) {
+                    //    $("div.5 > span#demo1").html("choose another #");
+                    //}
+                    //else
+                    //{
+                    //    $("Div.5 > #demo1").html("input is A ok");
+                    //}
+
+                    if (rangeObj.validity.rangeOverflow) {
+                        $("div.5 > #gren2").html("x is too high");
+                    }
+                    else if (rangeObj.validity.rangeUnderflow) {
+                        $("div.5 > #gren2").html("x is too low");
+
+                    }
+                };
+            </script>
+            </div>     
+           
+        </div>
+        <div class="momma">
+
+            <div class="6">
+                Forms Basic : GET            <!--"method" states whcih HTTP method to use (GET[appends submitted info to url] or POST [sensitive info] )-->
+                <form action="" method="get">    <!--"action" specifies form-handler/page with script for processing input data...basically action to be performed when form submits-->
+                    First Name:<input type="text" name="firstname"/><br />
+                    Last Name: <input type="text" name="lastname" />
+                    <input type="radio" name="sex" value="male" /> Male
+                    <input type="radio" name="sex" value="female" />Female
+                    <input type="submit" value="submit" />
+                </form>
+                
+            </div>
+            <div class="7">
+                Forms Basic : POST 
+                <form action="" method="post">  
+                    First Name:<input type="text" name="firstname"/><br />
+                    Last Name: <input type="text" name="lastname"/>
+                    Password: <input type="password" name="pssword" />
+                    <input type="radio" name="sex" value="male" /> Male
+                    <input type="radio" name="sex" value="female" />Female
+                    <input type="submit" value="submit" />
+                </form>
+            </div>
+             <div class="8">
+                Forms Basic : Validation 
+                <form action="" method="post">  
+                    First Name:<input type="text" name="firstname" placeholder="first name"/><br />
+                    Last Name: <input type="text" name="lastname" placeholder="last name"/>
+                    Password: <input type="password" name="pssword" />
+                    <input type="radio" name="sex" value="male" /> Male
+                    <input type="radio" name="sex" value="female" />Female
+                    <input type="button" onclick="" value="Click Me!" />        <!--Can define function to be called here-->
+                </form>
+            </div>
+           
+
+        </div>
+       
+        
+
+        <!--<div class="momma">
+                <div class="4">
+                    <span class="1"></span><br />
+                    <span class="2"></span><br />
+                    <span class="3"></span><br />
+                    <span class="4"></span>
+                </div>
+            
+            </div>-->
+
+
+	</body>
+</html>

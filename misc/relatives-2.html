@@ -1,0 +1,1634 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <style>
+    ul
+    {
+        width: 200px;
+        display: block;
+        margin:0;
+        padding:0;
+    }
+
+    ul li
+    {
+        width: 100%;
+        list-style-type: none;
+        min-height: 32px;
+        position: relative;
+        display: block;
+    }
+
+    ul li a
+    {
+        background: #81a7a2;
+        height: 32px;
+        position: relative;
+        display: block;
+    }
+    ul li li 
+    {
+        background: #628480;
+    }
+
+    ul li li a
+    {
+        box-sizing: border-box;
+        padding-left:15px;
+        background: #628480;
+    }
+
+    ul li li li a {
+        box-sizing: border-box;
+        padding-left:25px;
+        background: orange;
+
+    }
+
+    ul li li li li a {
+        box-sizing: border-box;
+        padding-left:35px;
+        background: purple;
+    }
+
+    span.toggle
+    {
+        display:block;
+        width:35px;
+        height: 32px;
+        position: absolute;
+        top:0;
+        right: 0;
+        background: red;
+    }
+
+    /*set hidden*/
+
+       div.megamenu_container, ul.sublevel1, ul.sublevel2, ul.sublevel3 {
+            display: none;
+        }
+
+</style>
+    <script>
+
+        $(function () {
+            //first levels
+            $("ul.dropdown > li > a > span").click(function (event) {
+                event.stopPropagation();
+                event.preventDefault();
+
+                var $this = $(this);
+                var $mTarget = $this.parent("a").next("div.megamenu_container");    //each div.megamenu_container has multiple ul.megamenu_containers
+                var $mChildren = $this.parents("a").next("div.megamenu_container").find("ul");    //all children ul's not just ul.megamenu_column 
+                var $mSiderels = $this.parents("li").siblings("li").find("div.megamenu_container");  //side relative "div.megamenu_container"
+                var $mSiderelChildren = $this.parents("li").siblings("li").find("ul");   //side relatives's inner children
+
+                if (!$mTarget.hasClass("main-open")) {
+                    //close/reset other menus of same levels
+                    $mSiderels.removeClass("main-open").css({ "display": "" });
+                    $mSiderelChildren.removeClass("submenu-open").css({ "display": "" });
+                    
+                    ////open target
+                    $mTarget.addClass("main-open").css({ "display": "block" });
+
+                }
+                else {
+                    //close any ul children of targetted container (includes each ul.megamenu and its children)
+                    $mChildren.removeClass("submenu-open").css({ "display": "" });
+                    //BUT also need to reset specific classes for deeper level menu's
+                    $mTarget.removeClass("main-open").css({ "display": "" });
+                }
+               
+
+            });
+
+
+            //deeper levels
+            $(".megamenu_column span").unbind('click').click(function (event) {
+
+                event.stopPropagation();
+                event.preventDefault();
+
+                //vars
+                var $this = $(this);
+                var $target = $this.parent().next("ul");
+                var $siderels = $this.parents("li").siblings("li").find("ul");        //side relatives
+                var $children = $this.parents("a").next("ul").find("ul");             //inner children menus
+                var $uncleMenus = $this.parents("ul.megamenu_column").siblings("ul.megamenu_column").find("ul").removeClass("submenu-open").css({ "display": "" }); //menus of older relatives
+
+
+                if (!$target.hasClass("submenu-open")) {
+                    //remove/reset other menus of same level
+                    $siderels.removeClass("submenu-open").css({ "display": "" });
+                    $uncleMenus.removeClass("submenu-open").css({ "display": "" });
+                    $target.addClass("submenu-open").css({ "display": "block" });
+                } else {
+
+                    $target.removeClass("submenu-open").css({ "display": "" }); //remove off targetted ul itself
+                    $children.removeClass("submenu-open").css({ "display": "" });   //remove off inner children
+                }
+
+            });
+
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <ul class="dropdown">
+        <li>
+            <a href="#">00000000000<span class="toggle">TgOG</span></a>
+            <div class="megamenu_container">
+                <div class="inner_container">
+                    <ul class="megamenu_column">
+                       <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+
+                       </li>
+                       <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+                       </li>
+                    </ul>   
+                    <ul class="megamenu_column">
+                       <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+
+                       </li>
+                       <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+                       </li>
+                    </ul>   
+                    <ul class="megamenu_column">
+                       <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+
+                       </li>
+                       <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+                       </li>
+                    </ul>   
+                </div>
+            </div>
+
+        </li>
+        <li>
+            <a href="#">00000000000<span class="toggle">TgOG</span></a>
+            <div class="megamenu_container">
+                <div class="inner_container">
+                    <ul class="megamenu_column">
+                       <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+
+                       </li>
+                       <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+                       </li>
+                    </ul>   
+                </div>
+            </div>
+
+        </li>
+        <li>
+            <a href="#">00000000000<span class="toggle">TgOG</span></a>
+            <div class="megamenu_container">
+                <div class="inner_container">
+                    <ul class="megamenu_column">
+                       <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+
+                       </li>
+                       <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+                       </li>
+                        <li>
+                           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+                           <ul class="sublevel1">
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                                           <ul class="sublevel3">
+                                               <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                                <li>
+                                                   <a href="#">fourth level link</a>
+                                               </li>
+                                            </ul>
+                                       </li>
+                                    </ul>
+                               </li>
+                                <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                               <li>
+                                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                                   <ul class="sublevel2">
+                                       <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                        <li>
+                                           <a href="#">third level link</a>
+                                       </li>
+                                    </ul>
+                               </li>
+                           </ul>
+                       </li>
+                    </ul>   
+                </div>
+            </div>
+
+        </li>
+        
+    </ul>
+
+   <!-- <ul id="big-menu">
+       <li>
+           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+           <ul class="sublevel1">
+               <li>
+                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                   <ul class="sublevel2">
+                       <li>
+                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                           <ul class="sublevel3">
+                               <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                            </ul>
+                       </li>
+                        <li>
+                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                           <ul class="sublevel3">
+                               <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                            </ul>
+                       </li>
+                        <li>
+                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                           <ul class="sublevel3">
+                               <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                            </ul>
+                       </li>
+                    </ul>
+               </li>
+                <li>
+                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                   <ul class="sublevel2">
+                       <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                   <ul class="sublevel2">
+                       <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                    </ul>
+               </li>
+           </ul>
+
+       </li>
+       <li>
+           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+           <ul class="sublevel1">
+               <li>
+                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                   <ul class="sublevel2">
+                       <li>
+                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                           <ul class="sublevel3">
+                               <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                            </ul>
+                       </li>
+                        <li>
+                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                           <ul class="sublevel3">
+                               <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                            </ul>
+                       </li>
+                        <li>
+                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                           <ul class="sublevel3">
+                               <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                            </ul>
+                       </li>
+                    </ul>
+               </li>
+                <li>
+                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                   <ul class="sublevel2">
+                       <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                   <ul class="sublevel2">
+                       <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                    </ul>
+               </li>
+           </ul>
+       </li>
+        <li>
+           <a href="http://www.yahoo.com">first level link<span class="toggle">TgOG</span></a> 
+           <ul class="sublevel1">
+               <li>
+                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                   <ul class="sublevel2">
+                       <li>
+                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                           <ul class="sublevel3">
+                               <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                            </ul>
+                       </li>
+                        <li>
+                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                           <ul class="sublevel3">
+                               <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                            </ul>
+                       </li>
+                        <li>
+                           <a href="#">third level link<span class="toggle">TgOG</span></a>
+                           <ul class="sublevel3">
+                               <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                                <li>
+                                   <a href="#">fourth level link</a>
+                               </li>
+                            </ul>
+                       </li>
+                    </ul>
+               </li>
+                <li>
+                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                   <ul class="sublevel2">
+                       <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                    </ul>
+               </li>
+               <li>
+                   <a href="#">second level link<span class="toggle">TgOG</span></a>
+                   <ul class="sublevel2">
+                       <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                        <li>
+                           <a href="#">third level link</a>
+                       </li>
+                    </ul>
+               </li>
+           </ul>
+       </li>
+    </ul>   -->
+
+
+</body>
+</html>

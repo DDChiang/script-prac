@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -16,9 +16,6 @@
     <div class="6"></div>
     <script>
         $(function () {
-
-            $("div.1").html(countParams("he", "check", "ho"));
-
             //basic check # parameters passed in
             function countParams() {
                 argText = "";
@@ -46,7 +43,8 @@
                 for (var i=0;i<arguments.length;i++)
                 {
                     //create values for "array Value" prop
-                    aVal.push({ aVal: i });         //works
+                    aVal.push({ aVal: (i+1) });         //works
+                    //console.log(JSON.stringify(aVal));
                     //assign "array val" to each elem inside each array
                     for (var c = 0; c < arguments[i].length; c++) {
                         $.extend(true, (arguments[i])[c], aVal[i]);     //works
@@ -57,44 +55,62 @@
 
                 //join them
                 var arrayGroup = bobs.concat(kits, coms);
-                var valSortGroup = arrayGroup.sort(function (a, b) { return parseInt(a.val) - parseInt(b.val) });
+                var valSortGroup = arrayGroup.sort(function (a, b) { return parseInt(a.val) - parseInt(b.val) });   //sort big fat group by item value
                 var aGL = arrayGroup.length;
                             //console.log("length " + aGL);
                             //console.log(JSON.stringify(valSortGroup));
                             //console.log(valSortGroup[valSortGroup-1].name);
                             //console.log(valSortedGroup[valSortedGroup.length].val); //someting wrong in here
-                var hVal = valSortGroup[valSortGroup.length-1].val; //how do we get the val?
+                var hVal = valSortGroup[valSortGroup.length-1].val; //how do we get the highest val?
                 //create val filter array for later 
                 for (var vc = 1; vc < (hVal + 1) ; vc++) {
-                    w["vArr" + vc] = [];
+                    w["vArr" + vc] = [];    //create vArr, vArr2, and vArr3
                 }
 
-                //separate them out and filter by reg val (prep for aVal sort)
+                //separate them out and filter by reg item "val" (prep for aVal sort)
                 for (ac = 0; ac < arrayGroup.length; ac++) {
                     //sense which val the item has
                     vVal = arrayGroup[ac].val;
                     //push each elem into whichever correct vVal array
-                    //console.log(vVal);
-                    w["vArr" + 1].push(arrayGroup[ac]);
+                    w["vArr" + (vVal)].push(arrayGroup[ac]);
                 }
                 //and in each val filter, sort by array val
-                for (aac = 0; aac < aVal[aVal.length-1].aVal; aac++)
+                for (aac = 0; aac < aVal[aVal.length-1].aVal; aac++)    //didn't sort the first one
                 {
-                    w["vArr" + (0 + 1)].sort(function (a, b) { return parseInt(a.aVal)- parseInt(b.aVal)});
+                    w["vArr" + (aac + 1)].sort(function (a, b) { return parseInt(a.aVal) - parseInt(b.aVal) });   
+                    //console.log(JSON.stringify(w["vArr" + (aac + 1)])+"----");
                 }
                 //join them all back together
+                    //to check if array exists, check if array.length >0
+                    //how to loop arrays into a "concat"-ion
+                        //opt 1: build concat method from string?
+                        //opt 2: should have created another big fat array containining each array. then for each each "item"
+                var vac = 0;
+                var monsterArray = w["vArr" + (vac + 1)];
+                console.log(JSON.stringify(monsterArray));
+
+                while (w["vArr" + (vac+2)]) //don't have to use "length". For some reason ... length keeps on going past 3
+                {       //need to skip vArr1 since monsterArray started out wit it already (aka don't need to concat arr1 to arr1. start from arr2)
+                    //console.log(JSON.stringify(w["vArr" + (vac + 1)]));
+                    monsterArray = monsterArray.concat(w["vArr" + (vac + 2)]);
+                    //console.log(JSON.stringify(w["vArr" + (vac + 1)]));
+                    console.log(JSON.stringify(monsterArray) + "he" + vac);
+                    vac++;
+                }
 
                 //return
-
-                // return JSON.stringify(aVal) + JSON.stringify(bobs);
-
-                return JSON.stringify(aVal) + "<br>" + JSON.stringify(vArr1);
-                
+                return JSON.stringify(monsterArray);
             }
 
             $("div.2").html(addVal(bobs, kits, coms));
 
-            //$("div.3").html();
+            
+        });
+    </script>
+</body>
+</html>
+
+<!--//$("div.3").html();
 
             //function checkParameters()
             //{
@@ -104,10 +120,5 @@
             //            val:arguments[i]
             //        });
             //    }
-            //}
+            //}-->
 
-
-        });
-    </script>
-</body>
-</html>
